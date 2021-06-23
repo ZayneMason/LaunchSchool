@@ -1,24 +1,24 @@
 # Rock Paper Scissors game
 
 def win?(first, second)
-  (first == 'r' && second == 'scissors' ||
-  first == 's' && second == 'paper' ||
-  first == 'p' && second == 'rock')
+  (first == 'rock' && second == 'scissors' ||
+  first == 'scissors' && second == 'paper' ||
+  first == 'paper' && second == 'rock')
 end
 
 loop do 
   player_choice = ''
   loop do
-    puts "=> Welcome to Rock Paper Scissors.\n=>Please make a choice:\n---'R' for rock \n---'P' for paper \n---'S' for scissors."
+    puts "=> Welcome to Rock Paper Scissors.\n=>Please make a choice: rock, paper, or scissors"
     player_choice << gets.chomp.downcase
     case player_choice
-    when 'r'
+    when 'rock'
       puts '=>You chose rock.'
       break
-    when 'p' 
+    when 'paper'
       puts '=>You chose paper.'
       break
-    when 's'
+    when 'scissors'
       puts '=>You chose scissors.'
       break
     else
@@ -30,8 +30,10 @@ loop do
 
   if win?(player_choice, computer_choice)
     puts "=>You won! Computer chose #{computer_choice}. "
-  else
+  elsif win?(computer_choice, player_choice)
     puts "=>You lost! Computer chose #{computer_choice}."
+  else
+    puts "=>It's a tie! Computer chose #{computer_choice}."
   end
 
   puts '=>Would you like to play again? (y/n)'
