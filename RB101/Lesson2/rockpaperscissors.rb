@@ -1,4 +1,10 @@
-#Rock Paper Scissors game
+# Rock Paper Scissors game
+
+def win?(first, second)
+  (first == 'r' && second == 'scissors' ||
+  first == 's' && second == 'paper' ||
+  first == 'p' && second == 'rock')
+end
 
 loop do 
   player_choice = ''
@@ -19,38 +25,15 @@ loop do
       puts '=>Please input a valid choice.'
     end
   end
-  
-  loop do
-    computer_choice = ['r', 'p', 's'].sample
-    if computer_choice == 'r' && player_choice == 'r'
-      puts "=>It's a tie! both you and the computer chose rock!"
-      break
-    elsif computer_choice == 'r' && player_choice == 'p'
-      puts "=>You win! The computer chose rock!"
-      break
-    elsif computer_choice == 'r' && player_choice == 's'
-      puts "=>You lose. Unfortunately the computer chose rock."
-      break
-    elsif computer_choice == 'p' && player_choice == 'p'
-      puts "=>It's a tie! both you and the computer chose paper!"
-      break
-    elsif computer_choice == 'p' && player_choice == 's'
-      puts "=>You won! The computer chose paper!"
-      break
-    elsif computer_choice == 'p' && player_choice == 'r'
-      puts "=>You lose. Unfortunately the computer chose paper."
-      break
-    elsif computer_choice == 's' && player_choice == 's'
-      puts "=>It's a tie! both you and the computer chose scissors!"
-      break
-    elsif computer_choice == 's' && player_choice == 'p'
-      puts "=>You lose. Unfortunately the computer chose scissors."
-      break
-    elsif computer_choice == 's' && player_choice == 'r'
-      puts "=>You win! The computer chose scissors!"
-      break
-    end
+
+  computer_choice = %w[rock paper scissors].sample
+
+  if win?(player_choice, computer_choice)
+    puts "=>You won! Computer chose #{computer_choice}. "
+  else
+    puts "=>You lost! Computer chose #{computer_choice}."
   end
+
   puts '=>Would you like to play again? (y/n)'
   decision = gets.chomp.downcase
   break if decision != 'y'
