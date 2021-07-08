@@ -1,3 +1,4 @@
+# Defining method to display board
 def display_board(brd)
   puts ""
   puts "     |     |"
@@ -12,13 +13,13 @@ def display_board(brd)
   puts " #{brd[7]}   |  #{brd[8]}  |  #{brd[9]}"
   puts "     |     |"
 end
-
+# Defining method to generate an empty board with placeholders
 def startboard
   board_slots = {}
   (1..9).each { |slot| board_slots[slot] = slot }
   board_slots
 end
-
+# Defining method to check for a win condition
 def winner?(brd)
   if brd[1] == brd[2] && brd[1] == brd[3]
     true
@@ -40,21 +41,21 @@ def winner?(brd)
     false
   end
 end
-
+# Defining method to check for a draw
 def draw?(brd)
   if brd.values.any? { |value| (1..9).include?(value) } == false && winner?(brd) == false
     true
   end
 end
 
-
+#Game loop
 loop do
 
   board = startboard
   display_board(board)
-
+  # Sub-loop for active play
   loop do
-
+    # Player turn
     loop do
       puts '=> Please input your choice. (number marking space)'
       user_choice = gets.chomp.to_i
@@ -69,7 +70,7 @@ loop do
       display_board(board)
       break
     end
-
+    # Checking for win or draw
     if draw?(board)
       puts "=> It's a draw!"
       break
@@ -77,7 +78,7 @@ loop do
       puts '=> You win!'
       break
     end
-
+    # Computer turn
     puts "=> Computer's move."
     loop do
       cpu_choice = (1..9).to_a.sample
@@ -89,7 +90,7 @@ loop do
       display_board(board)
       break
     end
-
+    # Checking for win or draw
     if draw?(board)
       puts "=> It's a draw!"
       break
@@ -99,7 +100,7 @@ loop do
     end
 
   end
-
+  # Asking player if they want to play again (restart loop)
   puts '=> Would you like to play again? (y/n)'
   decision = gets.chomp.downcase
   if decision == 'n'
