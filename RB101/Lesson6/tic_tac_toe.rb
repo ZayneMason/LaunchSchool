@@ -71,7 +71,7 @@ loop do
     end
 
     if draw?(board)
-      puts "It's a draw!"
+      puts "=> It's a draw!"
       break
     elsif winner?(board)
       puts '=> You win!'
@@ -91,7 +91,7 @@ loop do
     end
 
     if draw?(board)
-      puts "It's a draw!"
+      puts "=> It's a draw!"
       break
     elsif winner?(board)
       puts '=> Computer wins.'
