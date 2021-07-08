@@ -35,12 +35,11 @@ def winner?(brd)
   elsif brd[3] == brd[6] && brd[3] == brd[9]
     true
   elsif brd[2] == brd[5] && brd[2] == brd[8]
+    true
   else
     false
   end
 end
-
-
 
 loop do
 
