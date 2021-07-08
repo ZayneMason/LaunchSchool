@@ -41,6 +41,13 @@ def winner?(brd)
   end
 end
 
+def draw?(brd)
+  if brd.values.any? { |value| (1..9).include?(value) } == false && winner?(brd) == false
+    true
+  end
+end
+
+
 loop do
 
   board = startboard
@@ -63,7 +70,10 @@ loop do
       break
     end
 
-    if winner?(board)
+    if draw?(board)
+      puts "It's a draw!"
+      break
+    elsif winner?(board)
       puts '=> You win!'
       break
     end
@@ -80,7 +90,10 @@ loop do
       break
     end
 
-    if winner?(board)
+    if draw?(board)
+      puts "It's a draw!"
+      break
+    elsif winner?(board)
       puts '=> Computer wins.'
       break
     end
