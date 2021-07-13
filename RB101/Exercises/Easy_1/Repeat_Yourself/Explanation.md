@@ -1,0 +1,1 @@
+``line 4`` is the start of the code. On ``line 4`` we define the method ``repeat_times``. It has two parameters, ``str`` and ``amount``. ``str`` takes in a string as an argument, while ``amount`` takes in an integer. ``line 5`` invokes the ``times`` method on ``amount`` with a block.
