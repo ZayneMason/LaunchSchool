@@ -4,5 +4,3 @@
 def digit_list(number)
   number.to_s.split('').each {|num| num.to_i}
 end
-
-print digit_list(9823)
