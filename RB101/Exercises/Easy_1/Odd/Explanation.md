@@ -1,0 +1,1 @@
+``Line 5`` defines the ``is_odd?`` method, it has one parameter ``number`` that takes in an integer as an argument. ``Line 6`` makes ``is_odd?`` return the value ``true`` ``if``, the integer ``number`` represents, passed the modulo operator ``%`` with an argument 2, returns an integer greater than 0.
