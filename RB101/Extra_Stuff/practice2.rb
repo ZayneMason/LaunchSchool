@@ -21,35 +21,35 @@
 # Cannot be isosceles if the two equil sides are shorter than the longest
 
 def equilateral?(side1, side2, side3)
-  (side1.to_f == side2.to_f) && (side2.to_f == side3.to_f)
+  (side1 == side2) && (side2 == side3)
 end
 
 def isosceles?(side1, side2, side3)
-  if side1.to_f == side2.to_f && side3.to_f > side1.to_f
+  if side1 == side2 && side3 > side1
     false
-  elsif side2.to_f == side3.to_f && side1.to_f > side3.to_f
+  elsif side2 == side3 && side1 > side3
     false
-  elsif side1.to_f == side3.to_f && side2.to_f > side1.to_f
+  elsif side1 == side3 && side2 > side1
     false
   else
-    (((side1.to_f == side2.to_f) || (side1.to_f == side3.to_f) ||
-    (side2.to_f == side3.to_f)) && ((side1.to_f != side2.to_f) ||
-    (side1.to_f != side3.to_f) || (side2.to_f != side3.to_f)))
+    (((side1 == side2) || (side1 == side3) ||
+    (side2 == side3)) && ((side1 != side2) ||
+    (side1 != side3) || (side2 != side3)))
   end
 end
 
 def scalene?(side1, side2, side3)
-  (side1.to_f != side2.to_f) && (side2.to_f != side3.to_f)
+  (side1 != side2) && (side2 != side3)
 end
 
 def triangle(side1, side2, side3)
   return :invalid if side1 <= 0 || side2 <= 0 || side3 <= 0
 
-  return :isosceles if isosceles?(side1.to_f, side2.to_f, side3.to_f)
+  return :isosceles if isosceles?(side1, side2, side3)
 
-  return :equilateral if equilateral?(side1.to_f, side2.to_f, side3.to_f)
+  return :equilateral if equilateral?(side1, side2, side3)
 
-  return :scalene if scalene?(side1.to_f, side2.to_f, side3.to_f)
+  return :scalene if scalene?(side1, side2, side3)
 
  :invalid
 end
