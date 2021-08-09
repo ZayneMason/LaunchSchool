@@ -50,31 +50,94 @@
 
 # Algorithm/logic:
 # -- create an array that we will use as our return
-# -- reassign values of array elements in duplicate by pointing to original array's values in order to transpose the matrix
-# ---- 1st array containts the values at index 0 for each previous array, 2nd is index 1 values, and 3 is the index 2 values
+# -- assign values in our new array's rows by pointing to original array's values in order to transpose the matrix
+# ---- 1st array containts the values at index 0 in each of the previous arrays,
+# ---- 2nd is index 1 values, and 3rd is the index 2 values
 
+# Solution 1:
 
 def transpose(nested_arr)
   transposed_arr = []
-  current_row = 0
-  nested_arr.each do |arr|
-    add_row = []
-    add_row << arr[current_row] 
+  # Using each_with_index on both nested array and interior array elements should not be destructive to the original values.
+  # Using the index of the current array, we can reverse how the values are assigned, for example, we want to take the
+  # values located at [0][0..2] in the argument array and in the transposed array place them at [0..2][0],
+  # turning rows into columns.
+  nested_arr.each_with_index do | arr, arr_index |
+    # Setting a new_row empty array will allow us to append our located values to it and append it to transposed_arr.
+    # Because it is inside of the each_with_index block, it will reset to empty each time we move to a new array
+    new_row=[]
+    ## p previous_arr_index
+    # We already have the index of the array we are looking at, but we need to get the index of the value we are on in order to
+    # swap the value's index and array index to get the value in the argument array we want to append into our new_row.
+    arr.each_with_index do | _ , value_index |
+      # Each time we go over an element in the current argument sub-array,
+      # we can assign a value to append to the new_row that points to our desired value
+      # from the argument array.
+      # Our desired location would be flipping the array and value index
+      # -- example: we want [1][0] in our new array to be the value at [0][1] in the argument array
+      value = nested_arr[value_index][arr_index]
+      ## p value
+      new_row << value
+    end
+    # each time we complete our iteration over a sub array we need to append the `new_row` to our transposed array
+    ## p new_row
+    transposed_arr << new_row
   end
-  puts add_row
+  ## p transposed_arr
+  transposed_arr
 end
 
-transpose([[1, 4, 3], [5, 7, 9], [8, 2, 6]])
+# Solution 2:
 
+#naming method transposed_two so we can create tests seperate from the original solution.
+def transpose_two(nested_arr)
+  # In this solution we are going to again use a new array, however we aren't going to iterate at all.
+  # We can actually just hard-code appending new sub arrays to it where each value would point to the
+  # value in the argument array manually with the same logic of flipping the array index and value index
+  # in order to create columns from the original rows of the matrix.
+  # Pros: Easier to read and we get a visual of the matrix line by line
+  # Cons: If we wanted scalability it would not work, as this solution assumes that matrix will always be 3 x 3
+  # ----- while the previous can be adjusted easily to work with any size.
+  transposed_arr = []
+  transposed_arr << [nested_arr[0][0], nested_arr[1][0], nested_arr[2][0]]
+  transposed_arr << [nested_arr[0][1], nested_arr[1][1], nested_arr[2][1]]
+  transposed_arr << [nested_arr[0][2], nested_arr[1][2], nested_arr[2][2]]
+  ## p transposed_arr
+  transposed_arr
+end
 
-# # Test Cases: 
-# matrix = [
-#   [1, 5, 8],
-#   [4, 7, 2],
-#   [3, 9, 6]
-# ]
+# Test Cases: 
+matrix = [
+  [1, 5, 8],
+  [4, 7, 2],
+  [3, 9, 6]
+]
+new_matrix = transpose(matrix)
+new_matrix_two = transpose_two(matrix)
 
-# new_matrix = transpose(matrix)
+p new_matrix == [[1, 4, 3], [5, 7, 9], [8, 2, 6]]
+p new_matrix_two == [[1, 4, 3], [5, 7, 9], [8, 2, 6]]
+p matrix == [[1, 5, 8], [4, 7, 2], [3, 9, 6]]
 
-# p new_matrix == [[1, 4, 3], [5, 7, 9], [8, 2, 6]]
-# p matrix == [[1, 5, 8], [4, 7, 2], [3, 9, 6]]
+# Both solutions without implementation notes or debugging:
+
+# def transpose(nested_arr)
+#   transposed_arr = []
+#   nested_arr.each_with_index do | arr, arr_index |
+#     new_row=[]
+#     arr.each_with_index do | _ , value_index |
+#       value = nested_arr[value_index][arr_index]
+#       new_row << value
+#     end
+#     transposed_arr << new_row
+#   end
+#   transposed_arr
+# end
+
+# def transpose_two(nested_arr)
+#   transposed_arr = []
+#   transposed_arr << [nested_arr[0][0], nested_arr[1][0], nested_arr[2][0]]
+#   transposed_arr << [nested_arr[0][1], nested_arr[1][1], nested_arr[2][1]]
+#   transposed_arr << [nested_arr[0][2], nested_arr[1][2], nested_arr[2][2]]
+#   transposed_arr
+# end
