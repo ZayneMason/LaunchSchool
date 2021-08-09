@@ -8,8 +8,9 @@
 # symbol :equilateral, :isosceles, :scalene, or :invalid  depending on whether the triangle is equilateral,
 # isosceles, scalene, or invalid.
 
-# Problem: based 3 integers representing side lengths, applying triangular formulas, such as if all lengths are the same,
-# its equilateral.
+# Problem:
+# -- input: 3 integers reperesenting sides of triangle
+# -- output: symbol representing the type of triangle
 
 # Examples: The order of integers does not matter
 # should be able to take floats.
@@ -43,7 +44,7 @@ def scalene?(side1, side2, side3)
 end
 
 def triangle(side1, side2, side3)
-  return :invalid if side1 <= 0 || side2 <= 0 || side3 <= 0
+  return :invalid if [side1, side2, side3].any?{ |side| side <= 0 }
 
   return :isosceles if isosceles?(side1, side2, side3)
 
