@@ -21,14 +21,14 @@
 # in core, use conditionals to add to a sum for each that we will use to find percentages
 
 def uppercase?(string)
-  (65..90).to_a.include?(string.ord)
+  ("A".."Z").to_a.include?(string)
 end
 
 def lowercase?(string)
-  (97..122).to_a.include?(string.ord)
+  ("a".."z").to_a.include?(string)
 end
 
-def category(string)
+def categories(string)
   uppers = 0
   lowers = 0
   string.chars.each do |letter|
@@ -41,7 +41,7 @@ end
 
 def letter_percentages(string)
   percentage_hash = { lowercase: 0, uppercase: 0, neither: 0 }
-  values_array = category(string)
+  values_array = categories(string)
   percentage_hash[:uppercase] = (values_array[0] / string.length.to_f) * 100
   percentage_hash[:lowercase] = (values_array[1] / string.length.to_f) * 100
   percentage_hash[:neither] = (values_array[2] / string.length.to_f) * 100
