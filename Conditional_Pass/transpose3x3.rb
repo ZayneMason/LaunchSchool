@@ -119,7 +119,9 @@ p new_matrix == [[1, 4, 3], [5, 7, 9], [8, 2, 6]]
 p new_matrix_two == [[1, 4, 3], [5, 7, 9], [8, 2, 6]]
 p matrix == [[1, 5, 8], [4, 7, 2], [3, 9, 6]]
 
-# Both solutions without implementation notes or debugging:
+# Both solutions without implementation notes or commented debugging lines:
+
+# Solution 1:
 
 # def transpose(nested_arr)
 #   transposed_arr = []
@@ -133,6 +135,10 @@ p matrix == [[1, 5, 8], [4, 7, 2], [3, 9, 6]]
 #   end
 #   transposed_arr
 # end
+
+#---------------------------------------------------------------------------
+
+# Solution 2:
 
 # def transpose_two(nested_arr)
 #   transposed_arr = []
