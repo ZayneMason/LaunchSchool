@@ -1,16 +1,8 @@
 # Part One:
-# Create a class called MyCar. When you initialize a new instance or object of the class, allow the user to define some instance
-# variables that tell us the year, color, and model of the car.
-# Create an instance variable that is set to 0 during instantation of the object to track the current speed of the car as well.
-# Create instance methods that allow the car to speed up, brake, and shut the car off.
+# Add a class method to your MyCar class that calculates the gas mileage of any car.
 
 # Part Two:
-# Add an accessor method to your MyCar class to change and view the color of your car.
-# Then add an accessor method that allows you to view, but not modify, the year of your car.
-
-# Part Three:
-# You want to create a nice interface that allows you to accurately describe the action you want your program to perform.
-# Create a method called spray_paint that can be called on an object and will modify the color of the car.
+# Override the to_s method to create a user friendly print out of your object.
 
 class MyCar
   attr_accessor :color, :model, :speed
@@ -22,6 +14,16 @@ class MyCar
     self.model = m
     self.speed = 0
     self.view_info
+  end
+
+  def to_s
+    "#{self.color} #{self.year} #{self.model}"
+  end
+
+  # Class Methods:
+
+  def self.gas_milage(miles, gallons)
+    puts "#{miles / gallons} miles per gallon of gas."
   end
 
   # Information:
@@ -84,6 +86,8 @@ puts "------------------------------------------------------------------"
 puts "Testing creating object, viewing its states, and modifying them:"
 puts "------------------------------------------------------------------"
 zayne_car = MyCar.new(2013, "blue", "Subaru")
+MyCar.gas_milage(430, 14)
+puts zayne_car
 zayne_car.view_current_color
 zayne_car.view_year
 zayne_car.view_model
