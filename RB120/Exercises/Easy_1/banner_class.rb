@@ -30,4 +30,5 @@ end
 # Test cases:
 banner = Banner.new('To boldly go where no one has gone before.')
 puts banner
-
+banner = Banner.new('fuck you')
+puts banner
