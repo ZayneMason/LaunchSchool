@@ -29,16 +29,14 @@
 
 class Participant
 
-  attr_reader :total, :stay
-
   def initialize
-    @hand = Array.new
+    @hand = []
     @stay = 0
   end
 
   def total
     @total = 0
-    @hand.each { |card| @total += card.value}
+    @hand.each { |card| @total += card.value }
     @total
   end
 
@@ -109,6 +107,7 @@ class Card
 end
 
 class Game
+
   def initialize
     self.start
   end
@@ -145,7 +144,8 @@ class Game
       system "clear"
       self.start
     end
-  end    
+  end
+  
 end
 
 game = Game.new
