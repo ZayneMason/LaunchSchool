@@ -179,6 +179,7 @@ class TTTGame
       puts "\n~POINTS~\nPlayer: #{@@player1_wins}\nBot: #{@@bot_wins}\nTies: #{@@ties}"
       # again?
       break if self.again? == false
+      system "clear"
       # End if no
     end
     # Exit message
