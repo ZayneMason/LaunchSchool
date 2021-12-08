@@ -10,6 +10,7 @@
 
 class Board
   attr_accessor :grid
+
   def initialize
     @grid = [1, 2, 3, 4, 5, 6, 7, 8, 9].map {|index| index = Square.new(index)}
   end
@@ -49,6 +50,7 @@ end
 
 class Square
   attr_accessor :status
+
   def initialize(marking)
     @original_status = marking.to_s
     @status = marking.to_s.dup
@@ -62,6 +64,7 @@ end
 
 class Player
   attr_reader :symbol
+
   def initialize
     @symbol = "X"
   end
@@ -164,14 +167,12 @@ class TTTGame
 
   def play
     # Game outline here:
-    # Welcome message
     welcome_message
     # General game loop:
     loop do
       # display board
       @board = Board.new
       display_board
-      # loop until win || tie:
       turns
       system "clear"
       display_board
@@ -180,9 +181,7 @@ class TTTGame
       # again?
       break if self.again? == false
       system "clear"
-      # End if no
     end
-    # Exit message
     goodbye_message
   end
 end
