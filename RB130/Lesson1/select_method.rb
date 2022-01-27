@@ -4,7 +4,7 @@
 def select(arr)
   selected_items = []
   counter = 0
-  until counter == arr.max
+  until counter == arr.size
     selected_items << arr[counter] if yield(arr[counter])
     counter += 1
   end
