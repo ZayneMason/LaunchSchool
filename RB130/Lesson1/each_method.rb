@@ -3,7 +3,7 @@
 
 def each(arr)
   counter = 0
-  until counter == arr.max
+  until counter == arr.size
     yield(arr[counter])
     counter += 1
   end
