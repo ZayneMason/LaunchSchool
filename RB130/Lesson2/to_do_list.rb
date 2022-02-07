@@ -78,7 +78,8 @@ class TodoList
   # Rest of the code needs implementing.
 
   def add(todo)
-    raise TypeError, 'Can only add Todo objects' unless @todos << todo if todo.class == Todo
+    raise TypeError, 'Can only add Todo objects' unless todo.class == Todo
+    @todos << todo
   end
 
   alias_method :<<, :add
@@ -103,8 +104,12 @@ class TodoList
     select {|todo| todo.title == title}.first
   end
 
+  def done!
+    self.each {|todo| todo.done!}
+  end
+
   def done?
-    true if @todos.all? {|todo| todo.done?}
+    @todos.all? {|todo| todo.done?} ? true : false
   end
 
   def all_done
@@ -148,6 +153,7 @@ class TodoList
   end
 
   def remove_at(index)
+    self.item_at(index)
     @todos.delete_at(index)
   end
 
@@ -161,7 +167,7 @@ class TodoList
     @todos.each do |todo|
       yield(todo)
     end
-    @todos
+    self
   end
 
 
@@ -277,56 +283,3 @@ end
 # mark_done: takes a string as an argument, marks done the first todo that's title matches that argument
 # mark_all_done: marks every todo as done
 # mark_all_undone: marks every todo as not done
-
-
-# Testing:
-todo1 = Todo.new("Buy milk")
-todo2 = Todo.new("Clean room")
-todo3 = Todo.new("Go to gym")
-
-list = TodoList.new("Today's Todos")
-list.add(todo1)
-list.add(todo2)
-list.add(todo3)
-
-puts list
-
-list.pop
-
-puts list
-
-list.mark_done_at(1)
-
-puts list
-
-puts '---------------------------'
-
-todo1 = Todo.new("Buy milk")
-todo2 = Todo.new("Clean room")
-todo3 = Todo.new("Go to gym")
-
-list = TodoList.new("Today's Todos")
-list.add(todo1)
-list.add(todo2)
-list.add(todo3)
-
-list.each do |todo|
-  puts todo                   # calls Todo#to_s
-end
-
-puts '---------------------------'
-
-todo1 = Todo.new("Buy milk")
-todo2 = Todo.new("Clean room")
-todo3 = Todo.new("Go to gym")
-
-list = TodoList.new("Today's Todos")
-list.add(todo1)
-list.add(todo2)
-list.add(todo3)
-
-todo1.done!
-
-results = list.select { |todo| todo.done? }    # you need to implement this method
-
-puts results.inspect
