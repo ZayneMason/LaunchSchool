@@ -21,6 +21,10 @@ class TextTest < MiniTest::Test
     assert_equal(expected_result, text.swap('a', 'e'))
   end
 
+  def test_word_count
+    assert_equal(3, Text.new('a b c').word_count)
+  end
+
   def teardown
     @file.close
   end
