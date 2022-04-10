@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+require 'minitest'
+
+require_relative '../classes/cash_register.rb'
+require_relative '../classes/trasaction.rb'
+
+class CashRegisterTest < Minitest::Test
+end
+=======
 require_relative '../classes/cash_register.rb'
 require_relative '../classes/transaction.rb'
 require 'minitest/autorun'
@@ -40,3 +49,4 @@ class CashRegisterTest < MiniTest::Test
     assert_equal(1000, transaction.amount_paid)
   end
 end
+>>>>>>> 22e53e0e18ddf06bb7da3c21b8e6ac72c5459009
