@@ -126,11 +126,17 @@ post "/lists/:list_id" do
   end
 end
 
+# Deletes a list
 post "/lists/:list_id/destroy" do
   @list_id = params[:list_id]
   session[:lists].delete_at(@list_id.to_i)
-  session[:success] = "The list has been deleted."
-  redirect '/lists'
+
+  if env["HTTP_X_REQUESTED_WITH"] == "XMLHttpRequest"
+    "/lists"
+  else
+    session[:success] = "The list has been deleted."
+    redirect '/lists'
+  end
 end
 
 # Returns error message if todo name is invalid, else nil
@@ -156,14 +162,20 @@ post "/lists/:list_id/todos" do
   end
 end
 
+# Deletes a todo item
 post "/lists/:list_id/todos/:todo_id/destroy" do
   @list_id = params[:list_id]
   @list = load_list(@list_id)
 
   todo_id = params[:todo_id].to_i
   @list[:todos].delete_at(todo_id)
-  session[:success] = "Todo item has been deleted."
-  redirect "/lists/#{@list_id}"
+
+  if env["HTTP_X_REQUESTED_WITH"] == "XMLHttpRequest"
+    status 204
+  else
+    session[:success] = "Todo item has been deleted."
+    redirect "/lists/#{@list_id}"
+  end
 end
 
 post "/lists/:list_id/todos/:todo_id" do
