@@ -10,6 +10,7 @@ configure do
   set :session_secret, "1"
 end
 
+# Gets path to data based on environment
 def data_path
   if ENV["RACK_ENV"] == "test"
     File.expand_path("../test/data", __FILE__)
@@ -18,6 +19,7 @@ def data_path
   end
 end
 
+# Returns a hash of users and passwords, originally stored as a YAML file
 def users
   if ENV["RACK_ENV"] == "test"
     users_path = File.expand_path("../test/users.yml", __FILE__)
@@ -27,11 +29,13 @@ def users
   YAML.load_file(users_path)
 end
 
+# Renders markdown text for webpage viewing
 def render_markdown(text)
   markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
   markdown.render(text)
 end
 
+# Loads content of a file for viewing on webpage
 def load_file_content(path)
   content = File.read(path)
   case File.extname(path)
@@ -43,6 +47,7 @@ def load_file_content(path)
   end
 end
 
+# Tests rather or not a user is signed in at the time
 def check_login
   if !session[:username]
     session[:message] = "You must be signed in to do that."
@@ -50,6 +55,7 @@ def check_login
   end
 end
 
+# Tests that username and password used on login are valid
 def valid_credentials?(username, password)
   credentials = users
 
