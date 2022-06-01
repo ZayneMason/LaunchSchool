@@ -51,6 +51,7 @@ end
 def check_login
   if !session[:username]
     session[:message] = "You must be signed in to do that."
+    
     redirect "/"
   end
 end
@@ -78,6 +79,7 @@ post "/users/signin" do
     redirect "/"
   else
     session[:message] = "Invalid username or password."
+
     status 422
     erb :signin, layout: :layout
   end
@@ -86,6 +88,7 @@ end
 post "/users/signout" do
   session.delete(:username)
   session[:message] = "You have been signed out."
+
   redirect "/"
 end
 
@@ -104,6 +107,7 @@ post "/users/create" do
   else
     status 422
     session[:message] = "Please make sure username is unique, and both username and password are not empty."
+
     redirect "/users/create"
   end
 end
@@ -150,6 +154,7 @@ get "/:filename" do
   file_to_view = File.join(data_path, params[:filename])
   if !File.exist?(file_to_view)
     session[:message] = "#{params[:filename]} does not exist."
+
     redirect "/"
   end
 
@@ -173,6 +178,7 @@ post "/:filename" do
   File.write(file_to_edit, params[:content])
 
   session[:message] = "#{params[:filename]} has been updated."
+
   redirect "/"
 end
 
