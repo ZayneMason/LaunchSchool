@@ -51,7 +51,7 @@ end
 def check_login
   if !session[:username]
     session[:message] = "You must be signed in to do that."
-    
+
     redirect "/"
   end
 end
@@ -102,12 +102,13 @@ post "/users/create" do
     user_base[params[:username]] = BCrypt::Password.create(params[:password]).to_s
     File.write(data_path + "/../users.yml", user_base.to_yaml)
     session[:message] = "An account has been created for #{params[:username]}. You may now sign in."
+    
     status 302
     redirect "/"
   else
-    status 422
     session[:message] = "Please make sure username is unique, and both username and password are not empty."
 
+    status 422
     redirect "/users/create"
   end
 end
@@ -132,6 +133,7 @@ post "/create" do
   
   if filename.size == 0
     session[:message] = "Please name the file."
+
     status 422
     erb :new_doc
   else
