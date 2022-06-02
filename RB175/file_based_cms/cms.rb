@@ -182,7 +182,7 @@ end
 
 post "/:filename" do
   check_login
-  file_to_edit = File.join(data_path, params[:filename])
+  file_to_edit = File.join(data_path, File.basename(params[:filename]))
 
   File.write(file_to_edit, params[:content])
 
