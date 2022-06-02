@@ -1,6 +1,10 @@
 <!-- views/new.erb -->
 <form method="post" action="/create">
-  <label for="filename">Add a new document:</label>
+  <% if session[:is_a_copy] %>
+    <label for="filename">Add a name for copy of document:</label>
+  <% else %>
+    <label for="filename">Add a new document:</label>
+  <% end %>
   <div>
     <input name="filename" id="filename" />
     <button type="submit">Create</button>

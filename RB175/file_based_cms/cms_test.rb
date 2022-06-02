@@ -259,4 +259,24 @@ class AppTest < Minitest::Test
     assert_equal "Welcome!", session[:message]
     assert_equal "test_user", session[:username]
   end
+
+  def test_copy_file
+    create_document "changes.txt"
+    post "/changes.txt", { content: "new content" }, admin_session
+
+    get "/changes.txt/copy"
+    assert_equal 200, last_response.status
+
+    post "/create", {filename: "changes_copy.txt"}
+    
+    assert_equal 302, last_response.status
+    
+    get last_response["Location"]
+
+    assert_includes last_response.body, "changes_copy.txt"
+
+    get "/changes_copy.txt"
+
+    assert_includes last_response.body, "new content"
+  end
 end

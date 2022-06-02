@@ -144,7 +144,14 @@ post "/create" do
       redirect "/new"
     end
     
-    File.write(new_doc, "")
+    if session[:is_a_copy]
+      file_to_copy = File.join(data_path, session[:original_doc])
+      File.write(new_doc, File.read(file_to_copy))
+      session.delete(:is_a_copy)
+      session.delete(:original_doc)
+    else
+      File.write(new_doc, "")
+    end
     session[:message] = "#{params[:filename]} has been created."
 
     redirect "/"
@@ -196,4 +203,17 @@ post "/:filename/delete" do
   session[:message] = "#{params[:filename]} has been deleted."
 
   redirect "/"
+end
+
+get "/:filename/copy" do
+  check_login
+  file_to_copy = File.join(data_path, params[:filename])
+  if !File.exist?(file_to_copy)
+    session[:message] = "#{params[:filename]} does not exist."
+    redirect "/"
+  end
+  session[:is_a_copy] = true
+  session[:original_doc] = params[:filename] 
+
+  erb :new_doc, layout: :layout
 end
