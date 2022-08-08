@@ -1,0 +1,41 @@
+body {
+  background-image: url(https://cdnb.artstation.com/p/assets/images/images/036/760/183/original/phazed-phazed-psychedelic-energy-hands-gif.gif?1618529529);
+  background-repeat: no-repeat;
+  background-size: 1920px 1080px;
+}
+
+h1 {
+  color: white;
+  font-family: serif;
+}
+
+h2 {
+  color: white;
+  font-family: sans-serif;
+}
+
+h3 {
+  color: white;
+  font-family: sans-serif;
+}
+
+h4 {
+  color: white;
+  font-family: sans-serif;
+  line-height: 0px;
+}
+
+a {
+  color: cyan;
+  font-family: sans-serif;
+}
+
+li {
+  color: white;
+  font-family: sans-serif;
+  list-style-type: disc;
+}
+
+.my-links {
+  inline-size: auto;
+}
