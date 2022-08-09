@@ -19,6 +19,7 @@ class ExpenseData
     setup_schema
   end
 
+  # Displays a list of all expenses in the table
   def list_expenses
     result = @connection.exec("SELECT * FROM expenses ORDER BY created_on ASC;")
     if result.values.empty?
@@ -29,6 +30,7 @@ class ExpenseData
     output_result(result)
   end
 
+  # Adds an expense to the table
   def add_expsense(amount, memo)
     unless amount && memo
       abort 'You must provide an amount and memo.'
@@ -39,6 +41,7 @@ class ExpenseData
     @connection.exec_params(sql, [amount, memo, date])
   end
 
+  # Searches table for rows containing matching value to search term within memo
   def search(search_term)
     sql = "SELECT * FROM expenses WHERE memo ILIKE($1);"
     result = @connection.exec(sql, [search_term])
@@ -50,6 +53,7 @@ class ExpenseData
     output_result(result)
   end
 
+  # Deletes an expense on matching id
   def delete(id)
     ids = @connection.exec("SELECT * FROM expenses;").field_values("id")
     unless ids.include?(id)
@@ -65,13 +69,14 @@ class ExpenseData
     @connection.exec_params(sql, [id])
   end
 
+  # Clears all data within table.
   def clear
     @connection.exec("DELETE FROM expenses;")
   end
 
   private
 
-  
+  # Creates our table schema if it does not yet exist.
   def setup_schema
     result = @connection.exec <<~SQL
       SELECT COUNT(*) FROM information_schema.tables
@@ -90,6 +95,7 @@ class ExpenseData
     end
   end
 
+  # Outputs results to console in readable fashion.
   def output_result(result)
     result.each do |tuple|
       columns = [
@@ -108,6 +114,7 @@ class ExpenseData
     puts "Total #{amount_sum.to_s.rjust(25)}"
   end
 
+  # Displays a count of the expenses in the result.
   def display_count(result)
     count = result.ntuples
     if count == 0
