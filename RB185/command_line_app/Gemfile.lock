@@ -1,0 +1,12 @@
+GEM
+  specs:
+    pg (1.4.2)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  pg
+
+BUNDLED WITH
+   2.3.11
