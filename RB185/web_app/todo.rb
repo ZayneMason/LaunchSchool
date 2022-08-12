@@ -1,6 +1,7 @@
+require "tilt/erubis"
 require "sinatra"
 require "sinatra/content_for"
-require "tilt/erubis"
+
 
 require_relative "database_persistence"
 
@@ -83,12 +84,12 @@ end
 # View list of lists
 get "/lists" do
   @lists = @storage.all_lists
-  erb :lists, layout: :layout
+  erb :lists
 end
 
 # Render the new list form
 get "/lists/new" do
-  erb :new_list, layout: :layout
+  erb :new_list
 end
 
 # Create a new list
@@ -98,7 +99,7 @@ post "/lists" do
   error = error_for_list_name(list_name)
   if error
     session[:error] = error
-    erb :new_list, layout: :layout
+    erb :new_list
   else
     @storage.create_new_list(list_name)
     session[:success] = "The list has been created."
@@ -110,14 +111,14 @@ end
 get "/lists/:id" do
   @list_id = params[:id].to_i
   @list = load_list(@list_id)
-  erb :list, layout: :layout
+  erb :list
 end
 
 # Edit an existing todo list
 get "/lists/:id/edit" do
   id = params[:id].to_i
   @list = load_list(id)
-  erb :edit_list, layout: :layout
+  erb :edit_list
 end
 
 # Update an existing todo list
@@ -129,7 +130,7 @@ post "/lists/:id" do
   error = error_for_list_name(list_name)
   if error
     session[:error] = error
-    erb :edit_list, layout: :layout
+    erb :edit_list
   else
     @storage.update_list_name(id, list_name)
     session[:success] = "The list has been updated."
@@ -158,7 +159,7 @@ post "/lists/:list_id/todos" do
   error = error_for_todo(text)
   if error
     session[:error] = error
-    erb :list, layout: :layout
+    erb :list
   else
     @storage.create_new_todo(@list_id, text)
 
