@@ -15,24 +15,35 @@ class DatabasePersistence
   end
   
   def find_list(id)
-    sql = "SELECT * FROM lists WHERE id = $1"
+    sql = <<~SQL
+    SELECT lists.*,
+      COUNT(todos.id) AS todos_count,
+      COUNT(NULLIF(todos.completion_status, true)) AS todos_remaining
+      FROM lists
+      LEFT JOIN todos ON todos.list_id = lists.id
+      WHERE lists.id = $1
+      GROUP BY lists.id
+      ORDER BY lists.name;
+    SQL
     result = query(sql, id)
 
-    tuple = result.first
-    {id: tuple["id"].to_i, name: tuple["name"], todos: get_todos_for_list(id)}
+    tuple_to_list_hash(result.first)
   end
 
   def all_lists
-    sql = "SELECT * FROM lists"
+    sql = <<~SQL
+    SELECT lists.*,
+      COUNT(todos.id) AS todos_count,
+      COUNT(NULLIF(todos.completion_status, true)) AS todos_remaining
+      FROM lists
+      LEFT JOIN todos ON todos.list_id = lists.id
+      GROUP BY lists.id
+      ORDER BY lists.name;
+    SQL
     result = query(sql)
 
     result.map do |tuple|
-      list_id = tuple["id"].to_i
-      todos = get_todos_for_list(list_id)
-
-      { id: list_id,
-        name: tuple["name"],
-        todos: todos }
+      tuple_to_list_hash(tuple)
     end
   end
 
@@ -42,8 +53,8 @@ class DatabasePersistence
   end
 
   def delete_list(id)
-    query("DELETE FROM todos WHERE list_id = $1", [id])
-    query("DELETE FROM lists WHERE id = $1", [id])
+    query("DELETE FROM todos WHERE list_id = $1", id)
+    query("DELETE FROM lists WHERE id = $1", id)
   end
 
   def update_list_name(id, new_name)
@@ -62,20 +73,13 @@ class DatabasePersistence
   end
 
   def update_todo_status(list_id, todo_id, status)
-    sql = "UPDATE todos SET completion_status = $3 WHERE list_id = $1 AND todo_id = $2"
+    sql = "UPDATE todos SET completion_status = $3 WHERE list_id = $1 AND id = $2"
     query(sql, list_id, todo_id, status)
   end
 
   def mark_all_todos_complete(list_id)
     sql = "UPDATE todos SET completion_status = true WHERE list_id = $1"
     query(sql, list_id)
-  end
-
-  private
-
-  def query(statement, *params)
-    @logger.info "#{statement}: #{params}"
-    @db.exec_params(statement, params)
   end
 
   def get_todos_for_list(list_id)
@@ -86,5 +90,19 @@ class DatabasePersistence
         name: todo_tuple["name"],
         completed: todo_tuple["completion_status"] == "t" }
     end
+  end
+
+  private
+
+  def query(statement, *params)
+    @logger.info "#{statement}: #{params}"
+    @db.exec_params(statement, params)
+  end
+
+  def tuple_to_list_hash(tuple)
+    { id: tuple["id"].to_i,
+      name: tuple["name"],
+      todos_count: tuple["todos_count"].to_i,
+      todos_remaining: tuple["todos_remaining"].to_i }
   end
 end
