@@ -1,0 +1,16 @@
+header {
+  font-family: Georgia;
+  color: blue;
+}
+
+p {
+  font-family: Helvetica, Arial, sans-serif;
+  size: 14px;
+}
+
+code {
+  font-family: monospace;
+  font-style: italic;
+  text-decoration: underline;
+  color: green;
+}

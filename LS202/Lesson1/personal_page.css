@@ -1,7 +1,6 @@
 body {
-  background-image: url(https://cdnb.artstation.com/p/assets/images/images/036/760/183/original/phazed-phazed-psychedelic-energy-hands-gif.gif?1618529529);
-  background-repeat: no-repeat;
-  background-size: 1920px 1080px;
+  background-color: #01204b;
+  color: #eee;
 }
 
 h1 {
@@ -26,7 +25,7 @@ h4 {
 }
 
 a {
-  color: cyan;
+  color: #c3b802;
   font-family: sans-serif;
 }
 
@@ -38,4 +37,5 @@ li {
 
 .my-links {
   inline-size: auto;
+  color: #c3b802;
 }
